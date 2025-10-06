@@ -101,7 +101,7 @@ const DEFAULT_CONFIG = {
         _comment_Guncelleme: "Otomatik güncelleme ayarları. ",
         Guncelleme: {
             Etkin: true,
-            RepoURL: "Propenthia34/Minecraft-Console-Client"
+            RepoURL: "Propenthia34/Crage-Network-Console-Client"
         }
     }
 };
