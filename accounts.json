@@ -1,0 +1,14 @@
+[
+  {
+    "hesapAdi": "1. Bot",
+    "kullaniciAdi": "Oyun içi kullanıcı adı",
+    "sifre": "Oyun içi şifresi",
+    "sahip": "Sahip olacak kişinin oyun içi kullanıcı adı"
+  },
+  {
+    "hesapAdi": "ikinci_bot",
+    "kullaniciAdi": "Oyun içi kullanıcı adı",
+    "sifre": "Oyun içi şifresi",
+    "sahip": "Sahip olacak kişinin oyun içi kullanıcı adı"
+  }
+]
