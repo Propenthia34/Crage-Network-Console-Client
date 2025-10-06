@@ -25,8 +25,8 @@ Bot, `configuration.json` dosyası üzerinden yapılandırılabilen aşağıdaki
 
 1.  **Depoyu Klonlayın:**
     ```bash
-    git clone https://github.com/Propenthia34/Minecraft-Console-Client.git
-    cd Minecraft-Console-Client
+    git clone https://github.com/Propenthia34/Crage-Network-Console-Client.git
+    cd Crage-Network-Console-Client
     ```
 2.  **Bağımlılıkları Yükleyin:**
     ```bash
@@ -145,7 +145,7 @@ Bu dosya, botun çeşitli özelliklerini ve ayarlarını içerir. `DEFAULT_CONFI
     "_comment_Guncelleme": "Otomatik güncelleme ayarları. ",
     "Guncelleme": {
       "Etkin": true,
-      "RepoURL": "Propenthia34/Minecraft-Console-Client"
+      "RepoURL": "Propenthia34/Crage-Network-Console-Client"
     }
   }
 }
