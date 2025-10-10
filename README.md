@@ -1,5 +1,7 @@
 # Crage Network Console Client
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
 Bu proje, Crage Network sunucusuna bot olarak bağlanmak için tasarlanmış basit bir konsol istemcisidir. Mineflayer kütüphanesi kullanılarak geliştirilmiştir ve çeşitli otomatik özellikler sunar.
 
 ## Özellikler
@@ -20,6 +22,10 @@ Bot, `configuration.json` dosyası üzerinden yapılandırılabilen aşağıdaki
 *   **Yeniden Bağlanma (`YenidenBaglanma`):** Sunucuyla bağlantı koptuğunda otomatik yeniden bağlanma ayarları (gecikme süreleri).
 *   **Otomatik Mesaj (`OtoMesaj`):** Belirtilen aralıklarla, sırayla bir mesaj listesi gönderir. Sohbet botu gibi kullanılabilir.
 *   **Otomatik Güncelleme (`Guncelleme`):** Botun kendi GitHub deposundan otomatik olarak güncellenmesini sağlar. Etkinleştirilebilir ve depo URL'si yapılandırılabilir.
+
+## Gereksinimler
+
+*   [Node.js](https://nodejs.org/) (LTS sürümü önerilir)
 
 ## Kurulum
 
@@ -90,7 +96,7 @@ Bu dosya, botun çeşitli özelliklerini ve ayarlarını içerir. `DEFAULT_CONFI
     "_comment_KomutSistemi": "Sahip kullanıcısının bota oyun içinden komut vermesini sağlar.",
     "KomutSistemi": {
       "Etkin": true,
-      "_comment_OnEk": "Komutların başına gelecek olan karakter (örneğin: !gel).",
+      "_comment_OnEk": "Komutların başına gelecek olan karakter (örneğin: !at).",
       "OnEk": "!"
     },
     "_comment_Guvenlik": "Botun canını ve pozisyonunu kontrol eden güvenlik özellikleri.",
@@ -153,11 +159,16 @@ Bu dosya, botun çeşitli özelliklerini ve ayarlarını içerir. `DEFAULT_CONFI
 
 ## Kullanım
 
-Botu başlatmak için `start.bat` dosyasını kullanın:
+Botu başlatmak için aşağıdaki yöntemlerden birini kullanabilirsiniz.
 
-```bash
-start.bat
-```
+1.  **`start.bat` dosyasını çalıştırmak (Windows için):**
+    ```bash
+    start.bat
+    ```
+2.  **npm kullanarak başlatmak (Tüm platformlar):**
+    ```bash
+    npm start
+    ```
 
 Bot başlatıldığında, `accounts.json` dosyasında tanımlı hesaplar listelenecek ve başlatmak istediğiniz hesabın numarasını girmeniz istenecektir.
 
@@ -177,27 +188,3 @@ Bot, `configuration.json` dosyasındaki `Ozellikler.Guncelleme.Etkin` ayarı `tr
 ## Lisans
 
 Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakınız.
-
-```
-MIT License
-
-Copyright (c) 2025 Gökhan
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
