@@ -71,12 +71,12 @@ const DEFAULT_CONFIG = {
                 Etkin: true,
                 Komutlar: ["/server survival"]
             },
-            _comment_TekrarliKomutlar: "Belirtilen aralıkla sürekli tekrarlanacak komut.",
+            _comment_TekrarliKomutlar: "Belirtilen aralıkla sırayla tekrarlanacak komutlar.",
             TekrarliKomutlar: {
                 Etkin: true,
-                _comment_Aralik: "Milisaniye cinsinden tekrarlama aralığı (30000 = 30 saniye).",
+                _comment_Aralik: "Milisaniye cinsinden her komut arasındaki tekrarlama aralığı (30000 = 30 saniye).",
                 Aralik: 30000,
-                Komut: "/survival"
+                Komutlar: ["/survival"]
             }
         },
         _comment_YenidenBaglanma: "Sunucuyla bağlantı koptuğunda yeniden bağlanma ayarları.",
@@ -274,6 +274,7 @@ let healthCheckInterval = null;
 let safetyCheckInterval = null;
 let autoMessageInterval = null;
 let autoMessageIndex = 0;
+let repeatingCommandIndex = 0;
 let mcData = null;
 let reconnectTimer = null;
 let reconnectDelay = 5000; 
@@ -563,6 +564,7 @@ function startBot() {
     global.warnedNoFood = false;
     global.lowHealthWarned = false;
     autoMessageIndex = 0; 
+    repeatingCommandIndex = 0; 
 
     setTimeout(() => {
       try { bot.chat(`/login ${currentAccount.sifre}`); } catch {}
@@ -587,12 +589,20 @@ function startBot() {
 
         if (survivalInterval) clearInterval(survivalInterval);
         if (config.Ozellikler.OtoKomut.TekrarliKomutlar.Etkin) {
-            const repeatingCommand = config.Ozellikler.OtoKomut.TekrarliKomutlar.Komut;
-            const repeatingInterval = config.Ozellikler.OtoKomut.TekrarliKomutlar.Aralik;
-            console.log(chalk.blue(`[OtoKomut] Tekrarlı komut (${repeatingCommand}) ${repeatingInterval / 1000} saniyede bir çalışacak.`));
-            survivalInterval = setInterval(() => {
-                try { if(global.bot) global.bot.chat(repeatingCommand); } catch {}
-            }, repeatingInterval);
+            const settings = config.Ozellikler.OtoKomut.TekrarliKomutlar;
+            if (settings.Komutlar && settings.Komutlar.length > 0) {
+                console.log(chalk.blue(`[OtoKomut] Tekrarlı komutlar sistemi ${settings.Aralik / 1000} saniyede bir çalışacak.`));
+                survivalInterval = setInterval(() => {
+                    if (!global.bot) return;
+                    const commandToSend = settings.Komutlar[repeatingCommandIndex];
+                    try {
+                        global.bot.chat(commandToSend);
+                        repeatingCommandIndex = (repeatingCommandIndex + 1) % settings.Komutlar.length;
+                    } catch (e) {
+                        console.error(chalk.red('[OtoKomut] Tekrarlı komut gönderilirken hata:', e));
+                    }
+                }, settings.Aralik);
+            }
         }
 
         if (autoMessageInterval) clearInterval(autoMessageInterval);

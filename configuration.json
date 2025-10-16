@@ -52,12 +52,14 @@
           "/server survival"
         ]
       },
-      "_comment_TekrarliKomutlar": "Belirtilen aralıkla sürekli tekrarlanacak komut.",
+      "_comment_TekrarliKomutlar": "Belirtilen aralıkla sırayla tekrarlanacak komutlar.",
       "TekrarliKomutlar": {
         "Etkin": true,
-        "_comment_Aralik": "Milisaniye cinsinden tekrarlama aralığı (30000 = 30 saniye).",
+        "_comment_Aralik": "Milisaniye cinsinden her komut arasındaki tekrarlama aralığı (30000 = 30 saniye).",
         "Aralik": 30000,
-        "Komut": "/survival"
+        "Komutlar": [
+          "/survival"
+        ]
       }
     },
     "_comment_YenidenBaglanma": "Sunucuyla bağlantı koptuğunda yeniden bağlanma ayarları.",
