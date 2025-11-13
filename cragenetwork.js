@@ -1,6 +1,8 @@
 const originalConsoleLog = console.log;
+
 console.log = function(...args) {
-  if (typeof args[0] === 'string' && (args[0].includes('Chunk size is') || args[0].includes('1cb3ea404e31a6b5000000403c857c4b9e31a800000000000000000000000000000000000000000000000000000000000000000000000000'))) {
+  const message = args.map(arg => String(arg)).join(' ');
+  if (message.includes('Chunk size is') || message.includes('1cb3ea404e31a6b5000000403c857c4b9e31a800000000000000000000000000000000000000000000000000000000000000000000000000') || message.includes('PartialReadError')) {
     return;
   }
   originalConsoleLog.apply(console, args);
@@ -558,6 +560,9 @@ function startBot() {
   });
 
   bot.on("spawn", () => {
+    const title = `Crage Network - ${currentAccount.kullaniciAdi}`;
+    process.stdout.write(String.fromCharCode(27) + "]0;" + title + String.fromCharCode(7));
+
     reconnectDelay = config.Ozellikler.YenidenBaglanma.Gecikme;
     console.log(chalk.green("Bot sunucuya spawn oldu. Giriş yapılıyor..."));
 
@@ -742,6 +747,18 @@ function startBot() {
 }
 
 async function main() {
+    const asciiArt = `
+    /$$$$$$  /$$$$$$$     /$$$$$$    /$$$$$$   /$$$$$$$$
+   /$$__  $$| $$__  $$   /$$__  $$  /$$__  $$ | $$_____/
+  | $$  \__/| $$  \ $$  | $$  \ $$ | $$  \__/ | $$      
+  | $$      | $$$$$$$/  | $$$$$$$$ | $$ /$$$$ | $$$$$   
+  | $$      | $$__  $$  | $$__  $$ | $$|_  $$ | $$__/   
+  | $$    $$| $$  \ $$  | $$  | $$ | $$  \ $$ | $$      
+  |  $$$$$$/| $$  | $$  | $$  | $$ |  $$$$$$/ | $$$$$$$$
+   \______/ |__/  |__/  |__/  |__/  \______/  |________/
+  `;
+    console.log(chalk.cyan(asciiArt));
+
     const accountName = process.argv[2];
 
     let accounts = [];
