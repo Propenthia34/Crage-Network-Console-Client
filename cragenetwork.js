@@ -64,12 +64,16 @@ const DEFAULT_CONFIG = {
                 Yukseklik: 0
             }
         },
+        _comment_OyunModu: "Botun hangi oyun moduna gireceğini belirler. Seçenekler: 'survival', 'skyblock'. Boş bırakırsanız lobide kalır.",
+        OyunModu: {
+            Secim: ""
+        },
         _comment_OtoKomut: "Bota, sunucuya her katıldığında veya periyodik olarak otomatik komutlar yazdırma.",
         OtoKomut: {
             _comment_GirisKomutlari: "Sunucuya girildiğinde bir defaya mahsus, sırayla çalıştırılacak komutlar.",
             GirisKomutlari: {
                 Etkin: true,
-                Komutlar: ["/server survival"]
+                Komutlar: []
             },
             _comment_TekrarliKomutlar: "Belirtilen aralıkla sırayla tekrarlanacak komutlar.",
             TekrarliKomutlar: {
@@ -570,18 +574,33 @@ function startBot() {
       try { bot.chat(`/login ${currentAccount.sifre}`); } catch {}
     }, 1500);
 
-    if (config.Ozellikler.OtoKomut.GirisKomutlari.Etkin) {
-        let commandDelay = 3000; 
-        config.Ozellikler.OtoKomut.GirisKomutlari.Komutlar.forEach(command => {
-            setTimeout(() => {
-                try { 
-                    console.log(chalk.blue(`[OtoKomut] Giriş komutu çalıştırılıyor: ${command}`));
-                    bot.chat(command); 
-                } catch {}
-            }, commandDelay);
-            commandDelay += 2500;
-        });
-    }
+    // Oyun Modu Seçimi ve Giriş Komutları
+    setTimeout(() => {
+        const oyunModu = config.Ozellikler.OyunModu ? config.Ozellikler.OyunModu.Secim : "";
+
+        if (oyunModu && (oyunModu.toLowerCase() === 'survival' || oyunModu.toLowerCase() === 'skyblock')) {
+            const serverCommand = `/server ${oyunModu.toLowerCase()}`;
+            console.log(chalk.blue(`[OyunModu] '${oyunModu}' sunucusuna katılıyor...`));
+            try { bot.chat(serverCommand); } catch {}
+
+            // Diğer giriş komutlarını çalıştır
+            if (config.Ozellikler.OtoKomut.GirisKomutlari.Etkin) {
+                let commandDelay = 2500; // Sunucuya geçiş için biraz bekle
+                config.Ozellikler.OtoKomut.GirisKomutlari.Komutlar.forEach(command => {
+                    setTimeout(() => {
+                        try { 
+                            console.log(chalk.blue(`[OtoKomut] Giriş komutu çalıştırılıyor: ${command}`));
+                            bot.chat(command); 
+                        } catch {}
+                    }, commandDelay);
+                    commandDelay += 2500;
+                });
+            }
+        } else {
+            console.log(chalk.red('OYUN MODU SECILMEDI LUTFEN KONFIGRASYON DOSYASINDAN SECINIZ'));
+        }
+    }, 3000);
+
 
     setTimeout(() => {
         console.log(chalk.yellow("Otomatik sistemler ve aralıklar başlatılıyor..."));

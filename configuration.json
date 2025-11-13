@@ -13,6 +13,10 @@
       "_comment_Aralik": "Milisaniye cinsinden ne kadar sürede bir hareket yapılacağı (120000 = 2 dakika).",
       "Aralik": 120000
     },
+    "_comment_OyunModu": "Botun hangi oyun moduna gireceğini belirler. Aşağıdaki 'Secim' alanına tırnak işaretleri arasına 'survival' veya 'skyblock' yazın.",
+    "OyunModu": {
+      "Secim": ""
+    },
     "_comment_OtomatikBeslenme": "Bot acıktığında otomatik olarak yemek yemesini sağlar.",
     "OtomatikBeslenme": {
       "Etkin": true,
@@ -48,9 +52,7 @@
       "_comment_GirisKomutlari": "Sunucuya girildiğinde bir defaya mahsus, sırayla çalıştırılacak komutlar.",
       "GirisKomutlari": {
         "Etkin": true,
-        "Komutlar": [
-          "/server survival"
-        ]
+        "Komutlar": []
       },
       "_comment_TekrarliKomutlar": "Belirtilen aralıkla sırayla tekrarlanacak komutlar.",
       "TekrarliKomutlar": {
