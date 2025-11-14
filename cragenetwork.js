@@ -1,3 +1,8 @@
+const fs = require('fs');
+const path = require('path');
+
+
+
 const originalConsoleLog = console.log;
 
 console.log = function(...args) {
@@ -13,8 +18,6 @@ const { pathfinder, Movements } = require('mineflayer-pathfinder');
 const { GoalNear } = require('mineflayer-pathfinder').goals;
 const readline = require("readline");
 const { spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
 const axios = require('axios');
 const AdmZip = require('adm-zip');
 const _chalk = require("chalk");
@@ -82,7 +85,7 @@ const DEFAULT_CONFIG = {
                 Etkin: true,
                 _comment_Aralik: "Milisaniye cinsinden her komut arasındaki tekrarlama aralığı (30000 = 30 saniye).",
                 Aralik: 30000,
-                Komutlar: ["/survival"]
+                Komutlar: []
             }
         },
         _comment_YenidenBaglanma: "Sunucuyla bağlantı koptuğunda yeniden bağlanma ayarları.",
@@ -128,7 +131,14 @@ try {
     
     console.log(chalk.yellow('[Config] Yapılandırma dosyası başarıyla yüklendi ve güncellendi.'));
 } catch (e) {
-    console.error(chalk.red('[Config] HATA: configuration.json okunamadı veya bozuk. Lütfen dosyayı kontrol edin.'));
+    if (e instanceof SyntaxError) {
+        console.error(chalk.red('[Config] HATA: configuration.json dosyasında bir format hatası var.'));
+        console.error(chalk.yellow(`Detay: ${e.message}`));
+        console.error(chalk.yellow("JSON formatını kontrol etmek için bir online doğrulayıcı (JSON validator) kullanabilirsiniz."));
+    } else {
+        console.error(chalk.red('[Config] HATA: configuration.json okunamadı veya bulunamadı.'));
+        console.error(chalk.yellow(`Detay: ${e.message}`));
+    }
     process.exit(1);
 }
 
@@ -550,10 +560,17 @@ function startBot() {
   });
 
   bot.on("kicked", (reason) => {
-    const reasonText = reason.toString();
+    let reasonText = reason.toString();
+    if (reasonText === '[object Object]') {
+      try {
+        reasonText = JSON.stringify(reason, null, 2);
+      } catch (e) {
+        // ignore
+      }
+    }
     console.log(chalk.red("[KICKED] Sunucudan atıldınız. Sebep: " + reasonText));
     
-    if (reasonText.includes('logging in too fast')) {
+    if (reason.toString().includes('logging in too fast')) { // Use original toString for matching
         reconnectDelay = config.Ozellikler.YenidenBaglanma.HizliGirisGecikmesi;
         console.log(chalk.yellow(`Çok hızlı giriş denemesi. Yeniden bağlanma süresi ${reconnectDelay / 1000} saniyeye ayarlandı.`));
     }
@@ -577,7 +594,7 @@ function startBot() {
 
     setTimeout(() => {
       try { bot.chat(`/login ${currentAccount.sifre}`); } catch {}
-    }, 1500);
+    }, 2000);
 
     // Oyun Modu Seçimi ve Giriş Komutları
     setTimeout(() => {
@@ -604,7 +621,7 @@ function startBot() {
         } else {
             console.log(chalk.red('OYUN MODU SECILMEDI LUTFEN KONFIGRASYON DOSYASINDAN SECINIZ'));
         }
-    }, 3000);
+    }, 4000);
 
 
     setTimeout(() => {
@@ -771,7 +788,14 @@ async function main() {
             process.exit(1);
         }
     } catch (e) {
-        console.log(chalk.red('HATA: accounts.json dosyası okunamadı veya bozuk.'));
+        if (e instanceof SyntaxError) {
+            console.error(chalk.red('[Accounts] HATA: accounts.json dosyasında bir format hatası var.'));
+            console.error(chalk.yellow(`Detay: ${e.message}`));
+            console.error(chalk.yellow("JSON formatını kontrol etmek için bir online doğrulayıcı (JSON validator) kullanabilirsiniz."));
+        } else {
+            console.error(chalk.red('[Accounts] HATA: accounts.json okunamadı.'));
+            console.error(chalk.yellow(`Detay: ${e.message}`));
+        }
         process.exit(1);
     }
 

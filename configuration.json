@@ -13,10 +13,6 @@
       "_comment_Aralik": "Milisaniye cinsinden ne kadar sürede bir hareket yapılacağı (120000 = 2 dakika).",
       "Aralik": 120000
     },
-    "_comment_OyunModu": "Botun hangi oyun moduna gireceğini belirler. Aşağıdaki 'Secim' alanına tırnak işaretleri arasına 'survival' veya 'skyblock' yazın.",
-    "OyunModu": {
-      "Secim": ""
-    },
     "_comment_OtomatikBeslenme": "Bot acıktığında otomatik olarak yemek yemesini sağlar.",
     "OtomatikBeslenme": {
       "Etkin": true,
@@ -47,6 +43,10 @@
         "Yukseklik": 0
       }
     },
+    "_comment_OyunModu": "Botun hangi oyun moduna gireceğini belirler. Aşağıdaki 'Secim' alanına tırnak işaretleri arasına 'survival' veya 'skyblock' yazın.",
+    "OyunModu": {
+      "Secim": ""
+    },
     "_comment_OtoKomut": "Bota, sunucuya her katıldığında veya periyodik olarak otomatik komutlar yazdırma.",
     "OtoKomut": {
       "_comment_GirisKomutlari": "Sunucuya girildiğinde bir defaya mahsus, sırayla çalıştırılacak komutlar.",
@@ -59,9 +59,7 @@
         "Etkin": true,
         "_comment_Aralik": "Milisaniye cinsinden her komut arasındaki tekrarlama aralığı (30000 = 30 saniye).",
         "Aralik": 30000,
-        "Komutlar": [
-          "/survival"
-        ]
+        "Komutlar": []
       }
     },
     "_comment_YenidenBaglanma": "Sunucuyla bağlantı koptuğunda yeniden bağlanma ayarları.",
@@ -84,9 +82,9 @@
       ]
     },
     "_comment_Guncelleme": "Otomatik güncelleme ayarları. ",
-          "Guncelleme": {
-            "Etkin": true,
-            "RepoURL": "Propenthia34/Crage-Network-Console-Client"
+    "Guncelleme": {
+      "Etkin": true,
+      "RepoURL": "Propenthia34/Crage-Network-Console-Client"
     }
   }
 }
